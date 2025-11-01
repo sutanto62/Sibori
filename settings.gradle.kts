@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Sibori"
 include(":app")
+include(":core:designsystem")

@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import id.or.sutanto.sibori.ui.theme.SiboriTheme
+import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {

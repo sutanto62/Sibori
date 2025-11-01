@@ -1,4 +1,4 @@
-package id.or.sutanto.sibori.ui.theme
+package id.or.sutanto.sibori.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

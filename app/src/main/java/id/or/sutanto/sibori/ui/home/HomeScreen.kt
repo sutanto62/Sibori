@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,8 +34,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
-import id.or.sutanto.sibori.ui.theme.SiboriTheme
+import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -252,6 +254,7 @@ private fun ActionCircle(label: String, modifier: Modifier = Modifier) {
 }
 
 @Preview(showBackground = true)
+@PreviewFontScale
 @Composable
 private fun HomeScreenPreview() {
     SiboriTheme {
