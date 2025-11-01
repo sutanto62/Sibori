@@ -1,15 +1,39 @@
 package id.or.sutanto.sibori.ui.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import id.or.sutanto.sibori.ui.theme.SiboriTheme
 
 @Composable
@@ -17,18 +41,213 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(all = MaterialTheme.typography.bodyLarge.fontSize.value.toInt()),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(16.dp)
     ) {
+        GreetingHeader(userName = "Cayadi")
+
+        Spacer(Modifier.height(16.dp))
+
+        ThisWeekCard(
+            items = listOf(
+                ThisWeekItem(label = "M1", emphasis = Emphasis.Primary, indicator = Indicator.Black),
+                ThisWeekItem(label = "M2", emphasis = Emphasis.Neutral, indicator = Indicator.Black),
+                ThisWeekItem(label = "P", emphasis = Emphasis.Neutral, indicator = Indicator.Grey),
+                ThisWeekItem(label = "H1", emphasis = Emphasis.Neutral, indicator = Indicator.Grey)
+            )
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        AnnouncementCard(
+            title = "Pengumuman tugas atau catatan",
+            subtitle = "tentang protokol pelaksanaan tugas"
+        )
+
+        Spacer(Modifier.height(24.dp))
+
+        HelpSection(
+            onAddClick = { /* TODO: hook action */ },
+            actions = listOf("CS", "BS")
+        )
+    }
+}
+
+@Composable
+private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = "Home",
-            style = MaterialTheme.typography.headlineMedium
+            text = "Hai $userName !",
+            style = MaterialTheme.typography.headlineLarge,
+            fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Replace with UI from HomeScreen.png",
-            style = MaterialTheme.typography.bodyMedium
+            text = "Ini adalah aplikasi untuk Prodi",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+    }
+}
+
+private enum class Emphasis { Primary, Neutral }
+private enum class Indicator { None, Black, Grey }
+
+private data class ThisWeekItem(
+    val label: String,
+    val emphasis: Emphasis = Emphasis.Neutral,
+    val indicator: Indicator = Indicator.None,
+)
+
+@Composable
+private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = "Minggu Ini",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(Modifier.height(12.dp))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                items(items.size) { index ->
+                    val item = items[index]
+                    ThisWeekCircle(item)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ThisWeekCircle(item: ThisWeekItem, modifier: Modifier = Modifier) {
+    val bg = when (item.emphasis) {
+        Emphasis.Primary -> MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
+        Emphasis.Neutral -> Color.Transparent
+    }
+    val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
+
+    Box(
+        modifier = modifier
+            .size(64.dp)
+            .clip(CircleShape)
+            .background(bg)
+            .border(width = 1.dp, color = borderColor, shape = CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = item.label, style = MaterialTheme.typography.titleMedium)
+
+        when (item.indicator) {
+            Indicator.Black -> IndicatorDot(color = Color.Black, alignTopEnd = true)
+            Indicator.Grey -> IndicatorDot(color = Color.Gray, alignTopEnd = false)
+            Indicator.None -> Unit
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.IndicatorDot(color: Color, alignTopEnd: Boolean) {
+    Box(
+        modifier = Modifier
+            .align(if (alignTopEnd) Alignment.TopEnd else Alignment.TopCenter)
+            .padding(6.dp)
+            .size(10.dp)
+            .clip(CircleShape)
+            .background(color)
+    )
+}
+
+@Composable
+private fun AnnouncementCard(title: String, subtitle: String, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Leading circle placeholder
+            Surface(
+                modifier = Modifier.size(56.dp),
+                shape = CircleShape,
+                tonalElevation = 0.dp,
+                color = Color.Transparent,
+                border = androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
+                )
+            ) {}
+
+            Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
+                Text(text = title, style = MaterialTheme.typography.titleSmall)
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = null
+            )
+        }
+    }
+}
+
+@Composable
+private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier: Modifier = Modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Minta Tolong",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold
+            )
+            Surface(shape = CircleShape) {
+                IconButton(onClick = onAddClick) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = "Tambah")
+                }
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            actions.forEach { label ->
+                ActionCircle(label = label)
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+        Divider()
+    }
+}
+
+@Composable
+private fun ActionCircle(label: String, modifier: Modifier = Modifier) {
+    Surface(
+        modifier = modifier.size(84.dp),
+        shape = CircleShape,
+        tonalElevation = 1.dp,
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp,
+            MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
+        )
+    ) {
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+        }
     }
 }
 
