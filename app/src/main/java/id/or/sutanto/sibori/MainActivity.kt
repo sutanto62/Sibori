@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import id.or.sutanto.sibori.ui.theme.SiboriTheme
+import id.or.sutanto.sibori.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +61,19 @@ fun SiboriApp() {
         }
     ) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Greeting(
-                name = "Android",
-                modifier = Modifier.padding(innerPadding)
-            )
+            when (currentDestination) {
+                AppDestinations.HOME -> HomeScreen(
+                    modifier = Modifier.padding(innerPadding)
+                )
+                AppDestinations.FAVORITES -> PlaceholderScreen(
+                    title = "Favorites",
+                    modifier = Modifier.padding(innerPadding)
+                )
+                AppDestinations.PROFILE -> PlaceholderScreen(
+                    title = "Profile",
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
         }
     }
 }
@@ -81,6 +91,14 @@ enum class AppDestinations(
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun PlaceholderScreen(title: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "$title screen",
         modifier = modifier
     )
 }
