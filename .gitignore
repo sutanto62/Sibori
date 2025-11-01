@@ -1,0 +1,62 @@
+# Android/Gradle builds
+.gradle/
+**/build/
+build/
+.cxx/
+.externalNativeBuild/
+
+# Local configuration
+local.properties
+
+# IDE: IntelliJ/Android Studio
+*.iml
+*.iws
+*.ipr
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/gradle.xml
+.idea/kotlinc.xml
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
+.idea/sonarlint/
+.idea/deploymentTargetDropDown.xml
+
+# OS files
+.DS_Store
+
+# Artifacts
+*.apk
+*.ap_
+*.aab
+
+# Keystore and signing
+*.jks
+*.keystore
+*.signing
+
+# NDK / profiling
+obj/
+*.hprof
+
+# Google/Firebase (keep out of VCS by default)
+google-services.json
+crashlytics-build.properties
+
+# Lint outputs
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+fastlane/readme.md
+
+# Note: keeping Gradle wrapper tracked (do NOT ignore gradle/wrapper)
