@@ -1,3 +1,6 @@
+# Ensure unused Compose Material icons are removed when not referenced
+# No keep rules for icons; let R8 strip unused classes and resources
+# (using minifyEnabled=true and shrinkResources=true in release)
 # Add project specific ProGuard rules here.
 # You can control the set of applied configuration files using the
 # proguardFiles setting in build.gradle.
