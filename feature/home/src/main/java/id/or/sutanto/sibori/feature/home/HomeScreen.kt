@@ -1,4 +1,4 @@
-package id.or.sutanto.sibori.ui.home
+package id.or.sutanto.sibori.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
