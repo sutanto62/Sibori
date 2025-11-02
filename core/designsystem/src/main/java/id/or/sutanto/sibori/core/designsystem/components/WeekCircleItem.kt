@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,7 +22,7 @@ import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 enum class WeekCircleEmphasis { Primary, Neutral }
 
-enum class WeekCircleIndicator { None, Black, Grey }
+enum class WeekCircleIndicator { None, Black, Gray }
 
 @Composable
 fun WeekCircleItem(
@@ -48,18 +49,19 @@ fun WeekCircleItem(
         Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
 
         when (indicator) {
-            WeekCircleIndicator.Black -> IndicatorDot(color = Color.Black, alignTopEnd = true)
-            WeekCircleIndicator.Grey -> IndicatorDot(color = Color.Gray, alignTopEnd = true)
+            WeekCircleIndicator.Black -> IndicatorDot(color = Color.Black)
+            WeekCircleIndicator.Gray -> IndicatorDot(color = Color.Gray)
             WeekCircleIndicator.None -> Unit
         }
     }
 }
 
 @Composable
-private fun BoxScope.IndicatorDot(color: Color, alignTopEnd: Boolean) {
+private fun BoxScope.IndicatorDot(color: Color) {
     Box(
         modifier = Modifier
-            .align(if (alignTopEnd) Alignment.TopEnd else Alignment.TopCenter)
+            .align(Alignment.TopEnd)
+            .padding(6.dp)
             .size(10.dp)
             .clip(CircleShape)
             .background(color)

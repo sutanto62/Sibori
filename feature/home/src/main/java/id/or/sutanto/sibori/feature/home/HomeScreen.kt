@@ -51,8 +51,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             items = listOf(
                 ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
                 ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
-                ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Grey),
-                ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Grey)
+                ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
+                ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
             )
         )
 
