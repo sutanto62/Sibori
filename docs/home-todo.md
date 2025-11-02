@@ -1,7 +1,7 @@
  ⬢ To-do Working on 11 to-dos • 1 done
-    ☒ Define Home design tokens in designsystem (spacing, radii, elevations)
-    ☐ Create SectionHeader composable with title and icon action
-    ☐ Create WeekCircle composable with emphasis and indicator dot
+   [x] Define Home design tokens in designsystem (spacing, radii, elevations)
+   [x] Create SectionHeader composable with title and icon action
+     Create WeekCircle composable with emphasis and indicator dot
     ☐ Create AnnouncementCard composable with avatar and chevron
     ☐ Create ActionCircle button with label and border
     ☐ Move hardcoded HomeScreen strings to string resources
