@@ -1,4 +1,4 @@
- ⬢ To-do Working on 11 to-dos • 1 done
+ ⬢ To-do Working on 11 to-dos • 11 done
    [x] Define Home design tokens in designsystem (spacing, radii, elevations)
    [x] Create SectionHeader composable with title and icon action
    [x] Create WeekCircle composable with emphasis and indicator dot
