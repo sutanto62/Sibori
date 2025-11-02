@@ -4,8 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,16 +39,20 @@ fun WeekCircle(
     }
     val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
 
-    Box(
-        modifier = modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(backgroundColor)
-            .border(width = 1.dp, color = borderColor, shape = CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+    Box(modifier = modifier.size(size)) {
+        // The circular chip background and label
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(CircleShape)
+                .background(backgroundColor)
+                .border(width = 1.dp, color = borderColor, shape = CircleShape),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
+        }
 
+        // Overlay indicator on top of the circle (can slightly protrude)
         when (indicator) {
             WeekCircleIndicator.Black -> IndicatorDot(color = MaterialTheme.colorScheme.onSurface)
             WeekCircleIndicator.Gray -> IndicatorDot(color = MaterialTheme.colorScheme.outline)
@@ -61,7 +66,8 @@ private fun BoxScope.IndicatorDot(color: Color) {
     Box(
         modifier = Modifier
             .align(Alignment.TopEnd)
-            .padding(6.dp)
+            .offset(y = (4).dp, x = (-4).dp)
+            .size(10.dp)
             .size(10.dp)
             .clip(CircleShape)
             .background(color)

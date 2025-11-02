@@ -4,10 +4,10 @@
    [x] Create WeekCircle composable with emphasis and indicator dot
    [x] Create AnnouncementCard composable with avatar and chevron
    [x] Create ActionCircle button with label and border
-   [ ] Move hardcoded HomeScreen strings to string resources
-   [ ] Add previews: light/dark, font scale, locales
-   [ ] Add semantics and contentDescriptions; ensure 48dp touch targets
-   [ ] Replace deprecated Divider with HorizontalDivider
+   [x] Move hardcoded HomeScreen strings to string resources
+   [x] Add previews: light/dark, font scale, locales
+   [x] Add semantics and contentDescriptions; ensure 48dp touch targets
+   [x] Replace deprecated Divider with HorizontalDivider
    [ ] Align colors with Material roles (onSurfaceVariant, outline)
    [ ] Adapt layout for window size classes and orientation
    [ ] Add Compose UI tests for DS components
