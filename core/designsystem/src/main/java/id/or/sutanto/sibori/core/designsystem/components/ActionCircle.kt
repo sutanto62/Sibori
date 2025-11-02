@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ fun ActionCircle(
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
                 .then(
                     if (enabled) Modifier.clickable(role = Role.Button, onClick = onClick)
                     else Modifier

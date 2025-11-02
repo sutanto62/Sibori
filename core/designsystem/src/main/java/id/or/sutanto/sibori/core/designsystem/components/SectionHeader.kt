@@ -2,6 +2,7 @@ package id.or.sutanto.sibori.core.designsystem.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -17,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.core.designsystem.theme.spacing
 
@@ -45,11 +48,19 @@ fun SectionHeader(
         when {
             trailing != null -> trailing()
             onChevronClick != null -> Surface(shape = CircleShape) {
-                IconButton(onClick = onChevronClick) {
+                IconButton(
+                    onClick = onChevronClick,
+                    modifier = Modifier
+                        .sizeIn(minWidth = 48.dp, minHeight = 48.dp)
+                        .semantics { contentDescription = "More" }
+                ) {
                     Icon(imageVector = Icons.Filled.ChevronRight, contentDescription = null)
                 }
             }
-            else -> Icon(imageVector = Icons.Filled.ChevronRight, contentDescription = null)
+            else -> Icon(
+                imageVector = Icons.Filled.ChevronRight,
+                contentDescription = null
+            )
         }
     }
 }
