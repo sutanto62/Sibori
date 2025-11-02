@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -61,8 +62,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
 
         AnnouncementCard(
-            title = "Pengumuman tugas atau catatan",
-            subtitle = "tentang protokol pelaksanaan tugas"
+            title = stringResource(R.string.home_announcement_title),
+            subtitle = stringResource(R.string.home_announcement_subtitle)
         )
 
         Spacer(Modifier.height(24.dp))
@@ -78,12 +79,12 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
-            text = "Hai $userName !",
+            text = stringResource(R.string.home_greeting_title, userName),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Ini adalah aplikasi untuk Prodi",
+            text = stringResource(R.string.home_greeting_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -105,7 +106,7 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Minggu Ini",
+                text = stringResource(R.string.home_this_week),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -129,12 +130,16 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
 @Composable
 private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxWidth()) {
-        SectionHeader(title = "Minta Tolong")
+        SectionHeader(title = stringResource(R.string.home_help_title))
 
         Spacer(Modifier.height(16.dp))
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            actions.forEach { label ->
+            val labels = listOf(
+                stringResource(R.string.action_label_cs),
+                stringResource(R.string.action_label_bs)
+            )
+            labels.forEach { label ->
                 ActionCircle(label = label, onClick = { /* TODO */ })
             }
         }
