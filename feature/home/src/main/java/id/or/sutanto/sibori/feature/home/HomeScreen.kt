@@ -17,7 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -146,7 +146,7 @@ private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier:
         }
 
         Spacer(Modifier.height(8.dp))
-        Divider()
+        HorizontalDivider()
     }
 }
 
