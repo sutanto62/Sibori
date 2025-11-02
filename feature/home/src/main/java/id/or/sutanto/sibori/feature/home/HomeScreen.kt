@@ -34,6 +34,7 @@ import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
+import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 @Composable
@@ -122,47 +123,7 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
     }
 }
 
-@Composable
-private fun AnnouncementCard(title: String, subtitle: String, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Leading circle placeholder
-            Surface(
-                modifier = Modifier.size(56.dp),
-                shape = CircleShape,
-                tonalElevation = 0.dp,
-                color = Color.Transparent,
-                border = androidx.compose.foundation.BorderStroke(
-                    1.dp,
-                    MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
-                )
-            ) {}
-
-            Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
-                Text(text = title, style = MaterialTheme.typography.titleSmall)
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null
-            )
-        }
-    }
-}
+// Using designsystem AnnouncementCard
 
 @Composable
 private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier: Modifier = Modifier) {
