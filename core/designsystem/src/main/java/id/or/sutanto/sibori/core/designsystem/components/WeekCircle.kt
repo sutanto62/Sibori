@@ -49,8 +49,8 @@ fun WeekCircle(
         Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Medium)
 
         when (indicator) {
-            WeekCircleIndicator.Black -> IndicatorDot(color = Color.Black)
-            WeekCircleIndicator.Gray -> IndicatorDot(color = Color.Gray)
+            WeekCircleIndicator.Black -> IndicatorDot(color = MaterialTheme.colorScheme.onSurface)
+            WeekCircleIndicator.Gray -> IndicatorDot(color = MaterialTheme.colorScheme.outline)
             WeekCircleIndicator.None -> Unit
         }
     }
