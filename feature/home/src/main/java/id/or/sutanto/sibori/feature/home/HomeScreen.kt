@@ -35,6 +35,7 @@ import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
+import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 @Composable
@@ -134,7 +135,7 @@ private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier:
 
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             actions.forEach { label ->
-                ActionCircle(label = label)
+                ActionCircle(label = label, onClick = { /* TODO */ })
             }
         }
 
@@ -143,22 +144,7 @@ private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier:
     }
 }
 
-@Composable
-private fun ActionCircle(label: String, modifier: Modifier = Modifier) {
-    Surface(
-        modifier = modifier.size(84.dp),
-        shape = CircleShape,
-        tonalElevation = 1.dp,
-        border = androidx.compose.foundation.BorderStroke(
-            1.dp,
-            MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
-        )
-    ) {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            Text(text = label, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-        }
-    }
-}
+// Using designsystem ActionCircle
 
 @Preview(showBackground = true)
 @PreviewFontScale
