@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircleItem
+import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
@@ -111,7 +111,7 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(items.size) { index ->
                     val item = items[index]
-                    WeekCircleItem(
+                    WeekCircle(
                         label = item.label,
                         emphasis = item.emphasis,
                         indicator = item.indicator
