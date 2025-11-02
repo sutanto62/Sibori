@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -195,6 +196,14 @@ private fun HomeScreenPreviewEn() {
 @Preview(showBackground = true, name = "Home - ID", locale = "id")
 @Composable
 private fun HomeScreenPreviewId() {
+    SiboriTheme {
+        HomeScreen()
+    }
+}
+
+@PreviewScreenSizes
+@Composable
+private fun HomeScreenMultiPreview() {
     SiboriTheme {
         HomeScreen()
     }

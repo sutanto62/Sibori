@@ -9,5 +9,5 @@
    [x] Add semantics and contentDescriptions; ensure 48dp touch targets
    [x] Replace deprecated Divider with HorizontalDivider
    [x] Align colors with Material roles (onSurfaceVariant, outline)
-   [ ] Adapt layout for window size classes and orientation
+   [x] Adapt layout for window size classes and orientation
    [x] Add Compose UI tests for DS components
