@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
@@ -151,10 +152,21 @@ private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier:
 
 // Using designsystem ActionCircle
 
-@Preview(showBackground = true)
+@PreviewLightDark
 @PreviewFontScale
+@Preview(showBackground = true, name = "Home - EN", locale = "en")
 @Composable
-private fun HomeScreenPreview() {
+private fun HomeScreenPreviewEn() {
+    SiboriTheme {
+        HomeScreen()
+    }
+}
+
+@PreviewLightDark
+@PreviewFontScale
+@Preview(showBackground = true, name = "Home - ID", locale = "id")
+@Composable
+private fun HomeScreenPreviewId() {
     SiboriTheme {
         HomeScreen()
     }
