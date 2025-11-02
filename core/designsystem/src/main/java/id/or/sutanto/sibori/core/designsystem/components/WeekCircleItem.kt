@@ -24,7 +24,7 @@ enum class WeekCircleEmphasis { Primary, Neutral }
 enum class WeekCircleIndicator { None, Black, Grey }
 
 @Composable
-fun WeekCircle(
+fun WeekCircleItem(
     label: String,
     modifier: Modifier = Modifier,
     size: Dp = 64.dp,
@@ -49,7 +49,7 @@ fun WeekCircle(
 
         when (indicator) {
             WeekCircleIndicator.Black -> IndicatorDot(color = Color.Black, alignTopEnd = true)
-            WeekCircleIndicator.Grey -> IndicatorDot(color = Color.Gray, alignTopEnd = false)
+            WeekCircleIndicator.Grey -> IndicatorDot(color = Color.Gray, alignTopEnd = true)
             WeekCircleIndicator.None -> Unit
         }
     }
@@ -68,8 +68,8 @@ private fun BoxScope.IndicatorDot(color: Color, alignTopEnd: Boolean) {
 
 @Preview(showBackground = true)
 @Composable
-private fun WeekCirclePreview() {
+private fun WeekCircleItemPreview() {
     SiboriTheme {
-        WeekCircle(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black)
+        WeekCircleItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black)
     }
 }

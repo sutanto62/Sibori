@@ -1,10 +1,7 @@
 package id.or.sutanto.sibori.feature.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,13 +25,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.unit.dp
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
+import id.or.sutanto.sibori.core.designsystem.components.WeekCircleItem
+import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
+import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 @Composable
@@ -50,10 +49,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 
         ThisWeekCard(
             items = listOf(
-                ThisWeekItem(label = "M1", emphasis = Emphasis.Primary, indicator = Indicator.Black),
-                ThisWeekItem(label = "M2", emphasis = Emphasis.Neutral, indicator = Indicator.Black),
-                ThisWeekItem(label = "P", emphasis = Emphasis.Neutral, indicator = Indicator.Grey),
-                ThisWeekItem(label = "H1", emphasis = Emphasis.Neutral, indicator = Indicator.Grey)
+                ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
+                ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
+                ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Grey),
+                ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Grey)
             )
         )
 
@@ -89,13 +88,10 @@ private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
     }
 }
 
-private enum class Emphasis { Primary, Neutral }
-private enum class Indicator { None, Black, Grey }
-
 private data class ThisWeekItem(
     val label: String,
-    val emphasis: Emphasis = Emphasis.Neutral,
-    val indicator: Indicator = Indicator.None,
+    val emphasis: WeekCircleEmphasis = WeekCircleEmphasis.Neutral,
+    val indicator: WeekCircleIndicator = WeekCircleIndicator.None,
 )
 
 @Composable
@@ -115,49 +111,15 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
             LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(items.size) { index ->
                     val item = items[index]
-                    ThisWeekCircle(item)
+                    WeekCircleItem(
+                        label = item.label,
+                        emphasis = item.emphasis,
+                        indicator = item.indicator
+                    )
                 }
             }
         }
     }
-}
-
-@Composable
-private fun ThisWeekCircle(item: ThisWeekItem, modifier: Modifier = Modifier) {
-    val bg = when (item.emphasis) {
-        Emphasis.Primary -> MaterialTheme.colorScheme.primary.copy(alpha = 0.35f)
-        Emphasis.Neutral -> Color.Transparent
-    }
-    val borderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.6f)
-
-    Box(
-        modifier = modifier
-            .size(64.dp)
-            .clip(CircleShape)
-            .background(bg)
-            .border(width = 1.dp, color = borderColor, shape = CircleShape),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = item.label, style = MaterialTheme.typography.titleMedium)
-
-        when (item.indicator) {
-            Indicator.Black -> IndicatorDot(color = Color.Black, alignTopEnd = true)
-            Indicator.Grey -> IndicatorDot(color = Color.Gray, alignTopEnd = false)
-            Indicator.None -> Unit
-        }
-    }
-}
-
-@Composable
-private fun BoxScope.IndicatorDot(color: Color, alignTopEnd: Boolean) {
-    Box(
-        modifier = Modifier
-            .align(if (alignTopEnd) Alignment.TopEnd else Alignment.TopCenter)
-            .padding(6.dp)
-            .size(10.dp)
-            .clip(CircleShape)
-            .background(color)
-    )
 }
 
 @Composable
