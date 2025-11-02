@@ -32,6 +32,8 @@ import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.ui.platform.LocalConfiguration
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -41,31 +43,57 @@ import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        val configuration = LocalConfiguration.current
+        val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
         GreetingHeader(userName = "Cayadi")
 
         Spacer(Modifier.height(16.dp))
 
-        ThisWeekCard(
-            items = listOf(
-                ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
-                ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
-                ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
-                ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
+        if (widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape) {
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
+                ThisWeekCard(
+                    items = listOf(
+                        ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
+                        ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
+                        ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
+                        ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+                AnnouncementCard(
+                    title = stringResource(R.string.home_announcement_title),
+                    subtitle = stringResource(R.string.home_announcement_subtitle),
+                    modifier = Modifier.weight(1f)
+                )
+            }
+        } else {
+            ThisWeekCard(
+                items = listOf(
+                    ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
+                    ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
+                    ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
+                    ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
+                )
             )
-        )
+        }
 
         Spacer(Modifier.height(16.dp))
 
-        AnnouncementCard(
-            title = stringResource(R.string.home_announcement_title),
-            subtitle = stringResource(R.string.home_announcement_subtitle)
-        )
+        if (!(widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape)) {
+            AnnouncementCard(
+                title = stringResource(R.string.home_announcement_title),
+                subtitle = stringResource(R.string.home_announcement_subtitle)
+            )
+        }
 
         Spacer(Modifier.height(24.dp))
 

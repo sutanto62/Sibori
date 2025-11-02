@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.feature.home.HomeScreen
 
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @PreviewScreenSizes
 @Composable
-fun SiboriApp() {
+fun SiboriApp(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     
     NavigationSuiteScaffold(
@@ -60,10 +61,13 @@ fun SiboriApp() {
             }
         }
     ) {
+        // Derive width size class from current configuration when not provided
+        val derivedWidthClass = widthSizeClass
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             when (currentDestination) {
                 AppDestinations.HOME -> HomeScreen(
-                    modifier = Modifier.padding(innerPadding)
+                    modifier = Modifier.padding(innerPadding),
+                    widthSizeClass = derivedWidthClass
                 )
                 AppDestinations.FAVORITES -> PlaceholderScreen(
                     title = "Favorites",
