@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -23,6 +24,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.lifecycle.viewmodel.compose.viewModel
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -42,11 +46,52 @@ import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
+import id.or.sutanto.sibori.core.domain.HomeData
+import id.or.sutanto.sibori.core.model.WeekEmphasis
+import id.or.sutanto.sibori.core.model.WeekIndicator
+import id.or.sutanto.sibori.feature.home.HomeUiState
+import id.or.sutanto.sibori.feature.home.HomeViewModel
+import id.or.sutanto.sibori.feature.home.HomeModule
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
+    viewModel: HomeViewModel = viewModel(
+        factory = HomeModule.provideHomeViewModelFactory()
+    ),
+) {
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    when (val state = uiState) {
+        is HomeUiState.Loading -> {
+            LoadingState(modifier = modifier)
+        }
+        is HomeUiState.Error -> {
+            ErrorState(
+                message = state.message,
+                onRetry = { viewModel.refresh() },
+                modifier = modifier
+            )
+        }
+        is HomeUiState.Empty -> {
+            EmptyState(modifier = modifier)
+        }
+        is HomeUiState.Ready -> {
+            HomeContent(
+                data = state.data,
+                widthSizeClass = widthSizeClass,
+                modifier = modifier
+            )
+        }
+    }
+}
+
+@Composable
+private fun HomeContent(
+    data: HomeData,
+    widthSizeClass: WindowWidthSizeClass,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -55,45 +100,56 @@ fun HomeScreen(
     ) {
         val configuration = LocalConfiguration.current
         val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-        GreetingHeader(userName = "Cayadi")
+        GreetingHeader(userName = data.userName)
 
         Spacer(Modifier.height(16.dp))
+
+        // Map WeekBadge to ThisWeekItem for UI
+        val weekItems = data.weekBadges.map { badge ->
+            ThisWeekItem(
+                label = badge.label,
+                emphasis = when (badge.emphasis) {
+                    WeekEmphasis.Primary -> WeekCircleEmphasis.Primary
+                    WeekEmphasis.Neutral -> WeekCircleEmphasis.Neutral
+                },
+                indicator = when (badge.indicator) {
+                    WeekIndicator.Black -> WeekCircleIndicator.Black
+                    WeekIndicator.Gray -> WeekCircleIndicator.Gray
+                    WeekIndicator.None -> WeekCircleIndicator.None
+                }
+            )
+        }
+
+        // Get first announcement or use default
+        val announcement = data.announcements.firstOrNull()
 
         if (widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape) {
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
                 ThisWeekCard(
-                    items = listOf(
-                        ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
-                        ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
-                        ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
-                        ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
-                    ),
+                    items = weekItems,
                     modifier = Modifier.weight(1f)
                 )
-                AnnouncementCard(
-                    title = stringResource(R.string.home_announcement_title),
-                    subtitle = stringResource(R.string.home_announcement_subtitle),
-                    modifier = Modifier.weight(1f)
-                )
+                if (announcement != null) {
+                    AnnouncementCard(
+                        title = announcement.title,
+                        subtitle = announcement.subtitle,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
         } else {
-            ThisWeekCard(
-                items = listOf(
-                    ThisWeekItem(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black),
-                    ThisWeekItem(label = "M2", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Black),
-                    ThisWeekItem(label = "P", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray),
-                    ThisWeekItem(label = "H1", emphasis = WeekCircleEmphasis.Neutral, indicator = WeekCircleIndicator.Gray)
-                )
-            )
+            ThisWeekCard(items = weekItems)
         }
 
         Spacer(Modifier.height(16.dp))
 
         if (!(widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape)) {
-            AnnouncementCard(
-                title = stringResource(R.string.home_announcement_title),
-                subtitle = stringResource(R.string.home_announcement_subtitle)
-            )
+            if (announcement != null) {
+                AnnouncementCard(
+                    title = announcement.title,
+                    subtitle = announcement.subtitle
+                )
+            }
         }
 
         Spacer(Modifier.height(24.dp))
@@ -101,6 +157,57 @@ fun HomeScreen(
         HelpSection(
             onAddClick = { /* TODO: hook action */ },
             actions = listOf("CS", "BS")
+        )
+    }
+}
+
+@Composable
+private fun LoadingState(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "Loading...",
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+@Composable
+private fun ErrorState(
+    message: String,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Error: $message",
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.error
+        )
+        Spacer(Modifier.height(16.dp))
+        Button(onClick = onRetry) {
+            Text("Retry")
+        }
+    }
+}
+
+@Composable
+private fun EmptyState(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "No data available",
+            style = MaterialTheme.typography.bodyLarge
         )
     }
 }

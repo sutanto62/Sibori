@@ -1,11 +1,11 @@
-package id.or.sutanto.sibori.feature.home
+package id.or.sutanto.sibori.core.model
 
 /**
- * Core models needed for Home screen data and state.
- * These are UI-facing models kept inside the feature module for now.
+ * Domain models used throughout the app.
+ * These are stable, app-level models shared across features and data layer.
  */
 
-// --- Domain-ish models used by Home ---
+// --- User Profile ---
 
 data class Profile(
     val id: String,
@@ -16,12 +16,16 @@ data class Profile(
     val phone: String? = null,
 )
 
+// --- Ministry Types ---
+
 /** Type of ministry/service. Expand as we add more. */
 enum class MinistryType {
     MASS,
     MASS_USHER,
     CHOIR,
 }
+
+// --- Assignment & Replacement Models ---
 
 /** Status related to replacement workflow for an assignment. */
 enum class ReplacementStatus {
@@ -51,6 +55,8 @@ data class ReplacementRequest(
     val status: ReplacementRequestStatus = ReplacementRequestStatus.OPEN,
 )
 
+// --- Announcement ---
+
 /** Simple announcement content to show on Home. */
 data class Announcement(
     val id: String,
@@ -58,7 +64,7 @@ data class Announcement(
     val subtitle: String,
 )
 
-// --- Home-specific presentation models ---
+// --- Week Badge Models ---
 
 /**
  * Badge-like weekly summary item (mapped to WeekCircle in UI).
@@ -72,21 +78,3 @@ data class WeekBadge(
     val emphasis: WeekEmphasis = WeekEmphasis.Neutral,
     val indicator: WeekIndicator = WeekIndicator.None,
 )
-
-/** Aggregated data needed for the Home content state. */
-data class HomeData(
-    val userName: String,
-    val nextAssignment: MinistryAssignment?,
-    val weekBadges: List<WeekBadge> = emptyList(),
-    val announcements: List<Announcement> = emptyList(),
-    val openNeedsCount: Int = 0,
-)
-
-// --- Home UI state ---
-
-sealed interface HomeUiState {
-    data object Loading : HomeUiState
-    data class Error(val message: String) : HomeUiState
-    data object Empty : HomeUiState
-    data class Ready(val data: HomeData) : HomeUiState
-}

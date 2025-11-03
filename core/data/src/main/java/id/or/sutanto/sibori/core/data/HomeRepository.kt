@@ -1,4 +1,8 @@
-package id.or.sutanto.sibori.feature.home
+package id.or.sutanto.sibori.core.data
+
+import id.or.sutanto.sibori.core.model.Announcement
+import id.or.sutanto.sibori.core.model.MinistryAssignment
+import id.or.sutanto.sibori.core.model.WeekBadge
 
 /**
  * Home repository contract. In MVP we keep it simple and synchronous via suspend
@@ -22,17 +26,33 @@ class FakeHomeRepository : HomeRepository {
         MinistryAssignment(
             id = "assign_1",
             startAt = sampleEpochMillis(dayOffset = 2, hour24 = 9),
-            ministryType = MinistryType.MASS,
+            ministryType = id.or.sutanto.sibori.core.model.MinistryType.MASS,
             location = "St. Peter Parish",
             isConfirmedByUser = false,
-            replacementStatus = ReplacementStatus.NONE,
+            replacementStatus = id.or.sutanto.sibori.core.model.ReplacementStatus.NONE,
         )
 
     override suspend fun getWeekBadges(): List<WeekBadge> = listOf(
-        WeekBadge(label = "M1", emphasis = WeekEmphasis.Primary, indicator = WeekIndicator.Black),
-        WeekBadge(label = "M2", emphasis = WeekEmphasis.Neutral, indicator = WeekIndicator.Black),
-        WeekBadge(label = "C", emphasis = WeekEmphasis.Neutral, indicator = WeekIndicator.Gray),
-        WeekBadge(label = "U", emphasis = WeekEmphasis.Neutral, indicator = WeekIndicator.Gray),
+        WeekBadge(
+            label = "M1",
+            emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Primary,
+            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Black
+        ),
+        WeekBadge(
+            label = "M2",
+            emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
+            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Black
+        ),
+        WeekBadge(
+            label = "C",
+            emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
+            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Gray
+        ),
+        WeekBadge(
+            label = "U",
+            emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
+            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Gray
+        ),
     )
 
     override suspend fun getAnnouncements(): List<Announcement> = listOf(

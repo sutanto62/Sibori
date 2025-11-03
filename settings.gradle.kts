@@ -21,5 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Sibori"
 include(":app")
+include(":core:data")
 include(":core:designsystem")
+include(":core:domain")
+include(":core:model")
 include(":feature:home")

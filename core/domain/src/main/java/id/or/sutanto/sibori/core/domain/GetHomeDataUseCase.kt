@@ -1,4 +1,20 @@
-package id.or.sutanto.sibori.feature.home
+package id.or.sutanto.sibori.core.domain
+
+import id.or.sutanto.sibori.core.data.HomeRepository
+import id.or.sutanto.sibori.core.model.Announcement
+import id.or.sutanto.sibori.core.model.MinistryAssignment
+import id.or.sutanto.sibori.core.model.WeekBadge
+
+/**
+ * Aggregated data needed for the Home screen.
+ */
+data class HomeData(
+    val userName: String,
+    val nextAssignment: MinistryAssignment?,
+    val weekBadges: List<WeekBadge> = emptyList(),
+    val announcements: List<Announcement> = emptyList(),
+    val openNeedsCount: Int = 0,
+)
 
 /**
  * Aggregates data needed by Home screen.
