@@ -38,7 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -51,15 +51,12 @@ import id.or.sutanto.sibori.core.model.WeekEmphasis
 import id.or.sutanto.sibori.core.model.WeekIndicator
 import id.or.sutanto.sibori.feature.home.HomeUiState
 import id.or.sutanto.sibori.feature.home.HomeViewModel
-import id.or.sutanto.sibori.feature.home.HomeModule
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
-    viewModel: HomeViewModel = viewModel(
-        factory = HomeModule.provideHomeViewModelFactory()
-    ),
+    viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 

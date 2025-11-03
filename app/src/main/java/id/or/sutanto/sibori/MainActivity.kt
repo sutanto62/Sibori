@@ -26,14 +26,16 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.feature.home.HomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             SiboriTheme {
-                SiboriApp()
+                SiboriRoot()
             }
         }
     }
@@ -41,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
 @PreviewScreenSizes
 @Composable
-fun SiboriApp(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
+fun SiboriRoot(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
     
     NavigationSuiteScaffold(

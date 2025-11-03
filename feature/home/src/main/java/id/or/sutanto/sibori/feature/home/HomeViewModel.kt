@@ -2,12 +2,15 @@ package id.or.sutanto.sibori.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import id.or.sutanto.sibori.core.domain.GetHomeDataUseCase
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import id.or.sutanto.sibori.core.domain.GetHomeDataUseCase
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val getHomeData: GetHomeDataUseCase,
 ) : ViewModel() {
 
