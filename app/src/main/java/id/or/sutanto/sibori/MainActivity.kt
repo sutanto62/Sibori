@@ -16,16 +16,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
-import id.or.sutanto.sibori.feature.home.HomeScreen
+import id.or.sutanto.sibori.navigation.AppDestinations
+import id.or.sutanto.sibori.navigation.AppNavGraph
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,54 +43,31 @@ class MainActivity : ComponentActivity() {
 @PreviewScreenSizes
 @Composable
 fun SiboriRoot(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
-    var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
-    
+    val navController = rememberNavController()
+
     NavigationSuiteScaffold(
         navigationSuiteItems = {
-            AppDestinations.entries.forEach {
+            AppDestinationsItems.forEach { item ->
                 item(
-                    icon = {
-                        Icon(
-                            it.icon,
-                            contentDescription = it.label
-                        )
-                    },
-                    label = { Text(it.label) },
-                    selected = it == currentDestination,
-                    onClick = { currentDestination = it }
+                    icon = { Icon(item.icon, contentDescription = item.label) },
+                    label = { Text(item.label) },
+                    selected = false, // Selection handling could observe navBackStack if desired
+                    onClick = { navController.navigate(item.route) }
                 )
             }
         }
     ) {
-        // Derive width size class from current configuration when not provided
-        val derivedWidthClass = widthSizeClass
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            when (currentDestination) {
-                AppDestinations.HOME -> HomeScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    widthSizeClass = derivedWidthClass
-                )
-                AppDestinations.FAVORITES -> PlaceholderScreen(
-                    title = "Favorites",
-                    modifier = Modifier.padding(innerPadding)
-                )
-                AppDestinations.PROFILE -> PlaceholderScreen(
-                    title = "Profile",
-                    modifier = Modifier.padding(innerPadding)
-                )
-            }
-        }
+        AppNavGraph(navController = navController)
     }
 }
 
-enum class AppDestinations(
-    val label: String,
-    val icon: ImageVector,
-) {
-    HOME("Home", Icons.Default.Home),
-    FAVORITES("Favorites", Icons.Default.Favorite),
-    PROFILE("Profile", Icons.Default.AccountBox),
-}
+data class AppDestItem(val route: String, val label: String, val icon: ImageVector)
+
+private val AppDestinationsItems = listOf(
+    AppDestItem(AppDestinations.HOME, "Home", Icons.Default.Home),
+    AppDestItem(AppDestinations.FAVORITES, "Favorites", Icons.Default.Favorite),
+    AppDestItem(AppDestinations.PROFILE, "Profile", Icons.Default.AccountBox),
+)
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
