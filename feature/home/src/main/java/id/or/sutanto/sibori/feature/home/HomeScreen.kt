@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -62,23 +63,23 @@ fun HomeScreen(
 
     when (val state = uiState) {
         is HomeUiState.Loading -> {
-            LoadingState(modifier = modifier)
+            LoadingState(modifier = modifier.statusBarsPadding())
         }
         is HomeUiState.Error -> {
             ErrorState(
                 message = state.message,
                 onRetry = { viewModel.refresh() },
-                modifier = modifier
+                modifier = modifier.statusBarsPadding()
             )
         }
         is HomeUiState.Empty -> {
-            EmptyState(modifier = modifier)
+            EmptyState(modifier = modifier.statusBarsPadding())
         }
         is HomeUiState.Ready -> {
             HomeContent(
                 data = state.data,
                 widthSizeClass = widthSizeClass,
-                modifier = modifier
+                modifier = modifier.statusBarsPadding()
             )
         }
     }
