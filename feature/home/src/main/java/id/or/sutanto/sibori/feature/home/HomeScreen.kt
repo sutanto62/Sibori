@@ -111,8 +111,8 @@ private fun HomeContent(
                     WeekEmphasis.Neutral -> WeekCircleEmphasis.Neutral
                 },
                 indicator = when (badge.confirmation) {
-                    ConfirmationStatus.Confirmed -> WeekCircleIndicator.Black
-                    ConfirmationStatus.Done -> WeekCircleIndicator.Gray
+                    ConfirmationStatus.Confirmed -> WeekCircleIndicator.Confirmed
+                    ConfirmationStatus.Done -> WeekCircleIndicator.Done
                     ConfirmationStatus.None -> WeekCircleIndicator.None
                 }
             )

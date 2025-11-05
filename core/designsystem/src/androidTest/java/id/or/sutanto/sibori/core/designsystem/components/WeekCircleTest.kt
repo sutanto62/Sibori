@@ -13,7 +13,7 @@ class WeekCircleTest {
     @Test
     fun label_is_displayed() {
         composeTestRule.setContent {
-            SiboriTheme { WeekCircle(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black) }
+            SiboriTheme { WeekCircle(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Confirmed) }
         }
         composeTestRule.onNodeWithText("M1").assertIsDisplayed()
     }

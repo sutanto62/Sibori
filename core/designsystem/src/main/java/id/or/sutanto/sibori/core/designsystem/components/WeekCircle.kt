@@ -23,7 +23,7 @@ import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 
 enum class WeekCircleEmphasis { Primary, Neutral }
 
-enum class WeekCircleIndicator { None, Black, Gray }
+enum class WeekCircleIndicator { None, Confirmed, Done }
 
 @Composable
 fun WeekCircle(
@@ -54,8 +54,8 @@ fun WeekCircle(
 
         // Overlay indicator on top of the circle (can slightly protrude)
         when (indicator) {
-            WeekCircleIndicator.Black -> IndicatorDot(color = MaterialTheme.colorScheme.onSurface)
-            WeekCircleIndicator.Gray -> IndicatorDot(color = MaterialTheme.colorScheme.outline)
+            WeekCircleIndicator.Confirmed -> IndicatorDot(color = Color(0xFF2E7D32)) // green
+            WeekCircleIndicator.Done -> IndicatorDot(color = MaterialTheme.colorScheme.onSurface) // black-ish
             WeekCircleIndicator.None -> Unit
         }
     }
@@ -78,6 +78,6 @@ private fun BoxScope.IndicatorDot(color: Color) {
 @Composable
 private fun WeekCirclePreview() {
     SiboriTheme {
-        WeekCircle(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Black)
+        WeekCircle(label = "M1", emphasis = WeekCircleEmphasis.Primary, indicator = WeekCircleIndicator.Confirmed)
     }
 }
