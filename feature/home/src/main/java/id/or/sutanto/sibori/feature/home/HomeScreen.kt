@@ -49,7 +49,7 @@ import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.WeekEmphasis
-import id.or.sutanto.sibori.core.model.WeekIndicator
+import id.or.sutanto.sibori.core.model.ConfirmationStatus
 import id.or.sutanto.sibori.feature.home.HomeUiState
 import id.or.sutanto.sibori.feature.home.HomeViewModel
 
@@ -110,10 +110,10 @@ private fun HomeContent(
                     WeekEmphasis.Primary -> WeekCircleEmphasis.Primary
                     WeekEmphasis.Neutral -> WeekCircleEmphasis.Neutral
                 },
-                indicator = when (badge.indicator) {
-                    WeekIndicator.Black -> WeekCircleIndicator.Black
-                    WeekIndicator.Gray -> WeekCircleIndicator.Gray
-                    WeekIndicator.None -> WeekCircleIndicator.None
+                indicator = when (badge.confirmation) {
+                    ConfirmationStatus.Confirmed -> WeekCircleIndicator.Black
+                    ConfirmationStatus.Done -> WeekCircleIndicator.Gray
+                    ConfirmationStatus.None -> WeekCircleIndicator.None
                 }
             )
         }

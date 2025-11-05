@@ -36,22 +36,22 @@ class FakeHomeRepository : HomeRepository {
         WeekBadge(
             label = "M1",
             emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Primary,
-            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Black
+            confirmation = id.or.sutanto.sibori.core.model.ConfirmationStatus.Confirmed
         ),
         WeekBadge(
             label = "M2",
             emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
-            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Black
+            confirmation = id.or.sutanto.sibori.core.model.ConfirmationStatus.Confirmed
         ),
         WeekBadge(
-            label = "C",
+            label = "S1",
             emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
-            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Gray
+            confirmation = id.or.sutanto.sibori.core.model.ConfirmationStatus.Done
         ),
         WeekBadge(
-            label = "U",
+            label = "GM2",
             emphasis = id.or.sutanto.sibori.core.model.WeekEmphasis.Neutral,
-            indicator = id.or.sutanto.sibori.core.model.WeekIndicator.Gray
+            confirmation = id.or.sutanto.sibori.core.model.ConfirmationStatus.Done
         ),
     )
 

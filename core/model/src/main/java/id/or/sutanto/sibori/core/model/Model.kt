@@ -71,10 +71,11 @@ data class Announcement(
  * Keep presentation-agnostic; UI will map to design system specifics.
  */
 enum class WeekEmphasis { Neutral, Primary }
-enum class WeekIndicator { None, Gray, Black }
+// Confirmation status for weekly badges shown on Home
+enum class ConfirmationStatus { None, Confirmed, Done }
 
 data class WeekBadge(
     val label: String,
     val emphasis: WeekEmphasis = WeekEmphasis.Neutral,
-    val indicator: WeekIndicator = WeekIndicator.None,
+    val confirmation: ConfirmationStatus = ConfirmationStatus.None,
 )
