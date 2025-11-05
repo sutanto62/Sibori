@@ -25,6 +25,8 @@ import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.navigation.AppDestinations
 import id.or.sutanto.sibori.navigation.AppNavGraph
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,6 +46,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SiboriRoot(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact) {
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     NavigationSuiteScaffold(
         navigationSuiteItems = {
@@ -51,8 +55,15 @@ fun SiboriRoot(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compa
                 item(
                     icon = { Icon(item.icon, contentDescription = item.label) },
                     label = { Text(item.label) },
-                    selected = false, // Selection handling could observe navBackStack if desired
-                    onClick = { navController.navigate(item.route) }
+                    selected = currentRoute == item.route,
+                    onClick = {
+                        val options = navOptions {
+                            launchSingleTop = true
+                            restoreState = true
+                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        }
+                        navController.navigate(item.route, options)
+                    }
                 )
             }
         }
