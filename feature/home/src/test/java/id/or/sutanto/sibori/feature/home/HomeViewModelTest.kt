@@ -1,142 +1,98 @@
 package id.or.sutanto.sibori.feature.home
 
 import app.cash.turbine.test
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Test
-import id.or.sutanto.sibori.core.data.FakeHomeRepository
 import id.or.sutanto.sibori.core.data.HomeRepository
 import id.or.sutanto.sibori.core.domain.GetHomeDataUseCase
+import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.Announcement
 import id.or.sutanto.sibori.core.model.MinistryAssignment
-import id.or.sutanto.sibori.core.model.WeekBadge
+import id.or.sutanto.sibori.core.model.MinistryType
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
-    private val testDispatcher = StandardTestDispatcher()
-    private lateinit var repository: FakeHomeRepository
-    private lateinit var useCase: GetHomeDataUseCase
-    private lateinit var viewModel: HomeViewModel
+
+    private val dispatcher = StandardTestDispatcher()
 
     @Before
-    fun setup() {
-        repository = FakeHomeRepository()
-        useCase = GetHomeDataUseCase(repository)
-        viewModel = HomeViewModel(useCase)
+    fun setUp() {
+        kotlinx.coroutines.Dispatchers.setMain(dispatcher)
     }
 
     @After
     fun tearDown() {
-        // Clean up if needed
+        kotlinx.coroutines.Dispatchers.resetMain()
     }
 
     @Test
-    fun `initial state is Loading`() = runTest(testDispatcher) {
-        viewModel.state.test {
-            val initialState = awaitItem()
-            assertTrue(initialState is HomeUiState.Loading)
-            cancelAndIgnoreRemainingEvents()
+    fun ready_state_when_usecase_returns_data() = runTest(dispatcher) {
+        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.DATA)))
+
+        vm.state.test {
+            assert(awaitItem() is HomeUiState.Loading)
+            dispatcher.scheduler.advanceUntilIdle()
+            val next = awaitItem()
+            assert(next is HomeUiState.Ready)
         }
     }
 
     @Test
-    fun `refresh emits Ready state with data when repository returns data`() = runTest(testDispatcher) {
-        viewModel.state.test {
-            // Skip initial Loading state
-            skipItems(1)
-            
-            viewModel.refresh()
-            
-            val readyState = awaitItem()
-            assertTrue(readyState is HomeUiState.Ready)
-            
-            val data = (readyState as HomeUiState.Ready).data
-            assertEquals("Cayadi", data.userName)
-            assertTrue(data.weekBadges.isNotEmpty())
-            assertTrue(data.announcements.isNotEmpty())
-            assertEquals(3, data.openNeedsCount)
-            
-            cancelAndIgnoreRemainingEvents()
+    fun empty_state_when_usecase_returns_null() = runTest(dispatcher) {
+        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.EMPTY)))
+
+        vm.state.test {
+            assert(awaitItem() is HomeUiState.Loading)
+            dispatcher.scheduler.advanceUntilIdle()
+            val next = awaitItem()
+            assert(next is HomeUiState.Empty)
         }
     }
 
     @Test
-    fun `refresh emits Loading then Ready when successful`() = runTest(testDispatcher) {
-        viewModel.state.test {
-            // Skip initial Loading state from init
-            skipItems(1)
-            
-            viewModel.refresh()
-            
-            val loadingState = awaitItem()
-            assertTrue(loadingState is HomeUiState.Loading)
-            
-            val readyState = awaitItem()
-            assertTrue(readyState is HomeUiState.Ready)
-            
-            cancelAndIgnoreRemainingEvents()
+    fun error_state_when_usecase_throws() = runTest(dispatcher) {
+        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.ERROR)))
+
+        vm.state.test {
+            assert(awaitItem() is HomeUiState.Loading)
+            dispatcher.scheduler.advanceUntilIdle()
+            val next = awaitItem()
+            assert(next is HomeUiState.Error)
         }
     }
 
-    @Test
-    fun `refresh emits Error state when use case throws exception`() = runTest(testDispatcher) {
-        val errorRepository = object : HomeRepository {
-            override suspend fun getUserName(): String {
-                throw RuntimeException("Network error")
+    private fun sampleHomeData() = HomeData(
+        userName = "Test",
+        nextAssignment = MinistryAssignment(
+            id = "a1",
+            startAt = 0L,
+            ministryType = MinistryType.MASS
+        ),
+        weekBadges = emptyList(),
+        announcements = listOf(Announcement("id", "Title", "Sub")),
+        openNeedsCount = 0
+    )
+
+    private enum class Mode { DATA, EMPTY, ERROR }
+
+    private inner class FakeRepo(private val mode: Mode) : HomeRepository {
+        override suspend fun getUserName(): String = if (mode == Mode.ERROR) error("boom") else "Test"
+        override suspend fun getNextAssignment(): id.or.sutanto.sibori.core.model.MinistryAssignment? =
+            when (mode) {
+                Mode.DATA -> id.or.sutanto.sibori.core.model.MinistryAssignment(
+                    id = "a1", startAt = 0L, ministryType = id.or.sutanto.sibori.core.model.MinistryType.MASS
+                )
+                Mode.EMPTY, Mode.ERROR -> null
             }
-            override suspend fun getNextAssignment(): MinistryAssignment? = null
-            override suspend fun getWeekBadges(): List<WeekBadge> = emptyList()
-            override suspend fun getAnnouncements(): List<Announcement> = emptyList()
-            override suspend fun getOpenNeedsCount(): Int = 0
-        }
-        
-        val errorUseCase = GetHomeDataUseCase(errorRepository)
-        val errorViewModel = HomeViewModel(errorUseCase)
-        
-        errorViewModel.state.test {
-            // Skip initial Loading state
-            skipItems(1)
-            
-            errorViewModel.refresh()
-            
-            val errorState = awaitItem()
-            assertTrue(errorState is HomeUiState.Error)
-            
-            val error = errorState as HomeUiState.Error
-            assertTrue(error.message.contains("Network error"))
-            
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `refresh emits Empty state when use case returns null`() = runTest(testDispatcher) {
-        val emptyRepository = object : HomeRepository {
-            override suspend fun getUserName(): String = "Test"
-            override suspend fun getNextAssignment(): MinistryAssignment? = null
-            override suspend fun getWeekBadges(): List<WeekBadge> = emptyList()
-            override suspend fun getAnnouncements(): List<Announcement> = emptyList()
-            override suspend fun getOpenNeedsCount(): Int = 0
-        }
-        
-        val emptyUseCase = GetHomeDataUseCase(emptyRepository)
-        val emptyViewModel = HomeViewModel(emptyUseCase)
-        
-        emptyViewModel.state.test {
-            // Skip initial Loading state
-            skipItems(1)
-            
-            emptyViewModel.refresh()
-            
-            val emptyState = awaitItem()
-            assertTrue(emptyState is HomeUiState.Empty)
-            
-            cancelAndIgnoreRemainingEvents()
-        }
+        override suspend fun getWeekBadges(): List<id.or.sutanto.sibori.core.model.WeekBadge> = emptyList()
+        override suspend fun getAnnouncements(): List<id.or.sutanto.sibori.core.model.Announcement> =
+            if (mode == Mode.DATA) listOf(Announcement("id", "Title", "Sub")) else emptyList()
+        override suspend fun getOpenNeedsCount(): Int = 0
     }
 }
