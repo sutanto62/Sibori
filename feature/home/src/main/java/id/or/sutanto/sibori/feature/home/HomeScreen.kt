@@ -1,56 +1,30 @@
 package id.or.sutanto.sibori.feature.home
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.res.stringResource
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import androidx.compose.ui.platform.testTag
-import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
-import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.core.designsystem.theme.spacing
-import id.or.sutanto.sibori.feature.home.components.HelpSection
 import id.or.sutanto.sibori.core.domain.HomeData
-import id.or.sutanto.sibori.core.model.WeekEmphasis
-import id.or.sutanto.sibori.feature.home.HomeUiState
+import id.or.sutanto.sibori.feature.home.components.HelpSection
+import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 
 @Composable
 fun HomeScreen(
@@ -146,85 +120,7 @@ private fun HomeContent(
     }
 }
 
-@Composable
-private fun LoadingState(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .testTag("home_loading"),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(R.string.home_loading_message),
-            style = MaterialTheme.typography.bodyLarge
-        )
-    }
-}
-
-@Composable
-private fun ErrorState(
-    message: String,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .testTag("home_error"),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = stringResource(R.string.home_error_message, message),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.error
-        )
-        Spacer(Modifier.height(16.dp))
-        Button(onClick = onRetry) {
-            Text("Retry")
-        }
-    }
-}
-
-@Composable
-private fun EmptyState(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .testTag("home_empty"),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = stringResource(R.string.home_empty_message),
-            style = MaterialTheme.typography.bodyLarge
-        )
-    }
-}
-
-@Composable
-private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(R.string.home_greeting_title, userName),
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = stringResource(R.string.home_greeting_subtitle),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
-}
-
-// UI model extracted to HomeMappers.kt
-
- 
-
-// Using designsystem AnnouncementCard
-
-// Using designsystem ActionCircle
+// Sections extracted to HomeSections.kt
 
 @PreviewLightDark
 @PreviewFontScale
@@ -250,7 +146,7 @@ private fun HomeScreenPreviewId() {
 @Composable
 private fun HomeScreenMultiPreview() {
     SiboriTheme {
-        val demo = id.or.sutanto.sibori.core.domain.HomeData(
+        val demo = HomeData(
             userName = "Cayadi",
             nextAssignment = null,
             weekBadges = emptyList(),

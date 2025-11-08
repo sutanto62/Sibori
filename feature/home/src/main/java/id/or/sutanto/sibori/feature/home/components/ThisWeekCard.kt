@@ -9,20 +9,17 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
-import id.or.sutanto.sibori.feature.home.R
 import androidx.compose.ui.res.stringResource
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
-import androidx.compose.material3.MaterialTheme
-import id.or.sutanto.sibori.feature.home.ThisWeekItem
-import id.or.sutanto.sibori.core.designsystem.theme.spacing
+import androidx.compose.ui.text.font.FontWeight
+import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.theme.radii
+import id.or.sutanto.sibori.core.designsystem.theme.spacing
+import id.or.sutanto.sibori.feature.home.R
+import id.or.sutanto.sibori.feature.home.ThisWeekItem
 
 @Composable
 internal fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifier) {

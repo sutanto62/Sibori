@@ -8,15 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
-import id.or.sutanto.sibori.feature.home.R
 import id.or.sutanto.sibori.core.designsystem.theme.spacing
+import id.or.sutanto.sibori.feature.home.R
 
 @Composable
 internal fun HelpSection(

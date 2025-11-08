@@ -4,8 +4,8 @@
 [x] Externalize Loading/Error/Empty strings to resources
 [x] Add semantics/testTags for Loading, Error, Empty containers
 [x] Apply statusBarsPadding at root; use spacing tokens
-☐ Split HomeScreen into HomeScreen, HomeSections, HomeMappers files
-☐ Add PreviewParameterProvider with sample states (Loading/Error/Empty/Ready)
+[x] Split HomeScreen into HomeScreen, HomeSections, HomeMappers files
+[] Add PreviewParameterProvider with sample states (Loading/Error/Empty/Ready)
 ☐ Add date/time formatter in core:common and use in Home
 ☐ Update UI tests to use testTags and stateless API
 ☐ Mark helpers internal; minimize public API surface
