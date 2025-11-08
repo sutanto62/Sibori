@@ -23,9 +23,15 @@ class HomeScreenTest {
 
     @Test
     fun renders_ready_state_content() {
-        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.DATA)))
+        val data = HomeData(
+            userName = "Test",
+            nextAssignment = MinistryAssignment(id = "a1", startAt = 0L, ministryType = MinistryType.MASS),
+            weekBadges = emptyList(),
+            announcements = listOf(Announcement("ann_1", "Reminder: Rehearsal on Friday", "Choir rehearsal at 7 PM in the hall")),
+            openNeedsCount = 0
+        )
         composeRule.setContent {
-            SiboriTheme { HomeScreen(viewModel = vm) }
+            SiboriTheme { HomeScreen(state = HomeUiState.Ready(data)) }
         }
 
         composeRule.onNodeWithText("Hai Test !").assertIsDisplayed()
@@ -34,36 +40,17 @@ class HomeScreenTest {
 
     @Test
     fun renders_empty_state() {
-        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.EMPTY)))
         composeRule.setContent {
-            SiboriTheme { HomeScreen(viewModel = vm) }
+            SiboriTheme { HomeScreen(state = HomeUiState.Empty) }
         }
         composeRule.onNodeWithText("No data available").assertIsDisplayed()
     }
 
     @Test
     fun renders_error_state() {
-        val vm = HomeViewModel(GetHomeDataUseCase(FakeRepo(mode = Mode.ERROR)))
         composeRule.setContent {
-            SiboriTheme { HomeScreen(viewModel = vm) }
+            SiboriTheme { HomeScreen(state = HomeUiState.Error("boom")) }
         }
         composeRule.onNodeWithText("Error: boom").assertIsDisplayed()
-    }
-
-    private enum class Mode { DATA, EMPTY, ERROR }
-
-    private inner class FakeRepo(private val mode: Mode) : HomeRepository {
-        override suspend fun getUserName(): String = "Test"
-        override suspend fun getNextAssignment(): id.or.sutanto.sibori.core.model.MinistryAssignment? =
-            when (mode) {
-                Mode.DATA -> id.or.sutanto.sibori.core.model.MinistryAssignment(
-                    id = "a1", startAt = 0L, ministryType = id.or.sutanto.sibori.core.model.MinistryType.MASS
-                )
-                Mode.EMPTY, Mode.ERROR -> null
-            }
-        override suspend fun getWeekBadges(): List<id.or.sutanto.sibori.core.model.WeekBadge> = emptyList()
-        override suspend fun getAnnouncements(): List<id.or.sutanto.sibori.core.model.Announcement> =
-            if (mode == Mode.DATA) listOf(Announcement("ann_1", "Reminder: Rehearsal on Friday", "Choir rehearsal at 7 PM in the hall")) else emptyList()
-        override suspend fun getOpenNeedsCount(): Int = 0
     }
 }

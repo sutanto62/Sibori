@@ -149,7 +149,7 @@ private fun LoadingState(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Loading...",
+            text = stringResource(R.string.home_loading_message),
             style = MaterialTheme.typography.bodyLarge
         )
     }
@@ -169,7 +169,7 @@ private fun ErrorState(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Error: $message",
+            text = stringResource(R.string.home_error_message, message),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.error
         )
@@ -187,7 +187,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "No data available",
+            text = stringResource(R.string.home_empty_message),
             style = MaterialTheme.typography.bodyLarge
         )
     }
@@ -216,7 +216,7 @@ private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifie
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

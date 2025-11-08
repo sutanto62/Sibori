@@ -10,7 +10,7 @@ import id.or.sutanto.sibori.core.data.FakeHomeRepository
 import id.or.sutanto.sibori.core.model.MinistryType
 import id.or.sutanto.sibori.core.model.ReplacementStatus
 import id.or.sutanto.sibori.core.model.WeekEmphasis
-import id.or.sutanto.sibori.core.model.WeekIndicator
+import id.or.sutanto.sibori.core.model.ConfirmationStatus
 
 class HomeRepositoryTest {
     private lateinit var repository: FakeHomeRepository
@@ -48,19 +48,19 @@ class HomeRepositoryTest {
         assertEquals(4, badges.size)
         assertEquals("M1", badges[0].label)
         assertEquals(WeekEmphasis.Primary, badges[0].emphasis)
-        assertEquals(WeekIndicator.Black, badges[0].indicator)
+        assertEquals(ConfirmationStatus.Confirmed, badges[0].confirmation)
         
         assertEquals("M2", badges[1].label)
         assertEquals(WeekEmphasis.Neutral, badges[1].emphasis)
-        assertEquals(WeekIndicator.Black, badges[1].indicator)
+        assertEquals(ConfirmationStatus.Confirmed, badges[1].confirmation)
         
-        assertEquals("C", badges[2].label)
+        assertEquals("S1", badges[2].label)
         assertEquals(WeekEmphasis.Neutral, badges[2].emphasis)
-        assertEquals(WeekIndicator.Gray, badges[2].indicator)
+        assertEquals(ConfirmationStatus.Done, badges[2].confirmation)
         
-        assertEquals("U", badges[3].label)
+        assertEquals("GM2", badges[3].label)
         assertEquals(WeekEmphasis.Neutral, badges[3].emphasis)
-        assertEquals(WeekIndicator.Gray, badges[3].indicator)
+        assertEquals(ConfirmationStatus.Done, badges[3].confirmation)
     }
 
     @Test

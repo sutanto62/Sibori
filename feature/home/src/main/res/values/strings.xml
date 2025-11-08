@@ -8,4 +8,7 @@
     <string name="home_help_title">Minta Tolong</string>
     <string name="action_label_cs">CS</string>
     <string name="action_label_bs">BS</string>
+    <string name="home_loading_message">Loading...</string>
+    <string name="home_error_message">Error: %1$s</string>
+    <string name="home_empty_message">No data available</string>
 </resources>
