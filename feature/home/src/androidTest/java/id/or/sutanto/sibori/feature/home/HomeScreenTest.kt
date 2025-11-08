@@ -1,6 +1,7 @@
 package id.or.sutanto.sibori.feature.home
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -43,7 +44,7 @@ class HomeScreenTest {
         composeRule.setContent {
             SiboriTheme { HomeScreen(state = HomeUiState.Empty) }
         }
-        composeRule.onNodeWithText("No data available").assertIsDisplayed()
+        composeRule.onNodeWithTag("home_empty").assertIsDisplayed()
     }
 
     @Test
@@ -51,6 +52,14 @@ class HomeScreenTest {
         composeRule.setContent {
             SiboriTheme { HomeScreen(state = HomeUiState.Error("boom")) }
         }
-        composeRule.onNodeWithText("Error: boom").assertIsDisplayed()
+        composeRule.onNodeWithTag("home_error").assertIsDisplayed()
+    }
+
+    @Test
+    fun renders_loading_state() {
+        composeRule.setContent {
+            SiboriTheme { HomeScreen(state = HomeUiState.Loading) }
+        }
+        composeRule.onNodeWithTag("home_loading").assertIsDisplayed()
     }
 }
