@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.platform.testTag
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
@@ -145,7 +146,9 @@ private fun HomeContent(
 @Composable
 private fun LoadingState(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("home_loading"),
         contentAlignment = Alignment.Center
     ) {
         Text(
@@ -164,7 +167,8 @@ private fun ErrorState(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .testTag("home_error"),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -183,7 +187,9 @@ private fun ErrorState(
 @Composable
 private fun EmptyState(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .testTag("home_empty"),
         contentAlignment = Alignment.Center
     ) {
         Text(
