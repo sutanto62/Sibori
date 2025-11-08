@@ -40,9 +40,9 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
-import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
+import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
@@ -211,33 +211,7 @@ private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
 
 // UI model extracted to HomeMappers.kt
 
-@Composable
-private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(
-                text = stringResource(R.string.home_this_week),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(12.dp))
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(items.size) { index ->
-                    val item = items[index]
-                    WeekCircle(
-                        label = item.label,
-                        emphasis = item.emphasis,
-                        indicator = item.indicator
-                    )
-                }
-            }
-        }
-    }
-}
+ 
 
 // Using designsystem AnnouncementCard
 

@@ -42,7 +42,7 @@ fun AnnouncementCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
     ) {
         Row(
             modifier = Modifier
@@ -54,7 +54,7 @@ fun AnnouncementCard(
             Surface(
                 modifier = Modifier.size(56.dp),
                 shape = CircleShape,
-                color = Color.Transparent,
+                color = Color.White,
                 tonalElevation = 0.dp,
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.6f))
             ) {}
