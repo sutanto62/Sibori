@@ -8,4 +8,4 @@
 [x] Add PreviewParameterProvider with sample states (Loading/Error/Empty/Ready)
 [x] Add date/time formatter in core:common and use in Home
 [x] Update UI tests to use testTags and stateless API
-☐ Mark helpers internal; minimize public API surface
+[x] Mark helpers internal; minimize public API surface

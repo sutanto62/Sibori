@@ -27,7 +27,7 @@ import id.or.sutanto.sibori.feature.home.components.HelpSection
 import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     state: HomeUiState,
     modifier: Modifier = Modifier,
     widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,

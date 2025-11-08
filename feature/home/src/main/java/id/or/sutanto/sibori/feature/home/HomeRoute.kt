@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun HomeRoute() {
+internal fun HomeRoute() {
     val viewModel: HomeViewModel = hiltViewModel()
     val state = viewModel.state.collectAsStateWithLifecycle().value
     HomeScreen(state = state, onRetry = { viewModel.refresh() })
