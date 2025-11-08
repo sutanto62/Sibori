@@ -38,6 +38,5 @@ internal fun HelpSection(
         }
 
         Spacer(Modifier.height(MaterialTheme.spacing.sm))
-        HorizontalDivider()
     }
 }

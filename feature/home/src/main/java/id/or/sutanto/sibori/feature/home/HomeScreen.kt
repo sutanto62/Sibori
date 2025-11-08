@@ -72,7 +72,7 @@ private fun HomeContent(
     ) {
         val configuration = LocalConfiguration.current
         val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-        GreetingHeader(userName = data.userName)
+        GreetingHeader(userName = data.userName, nextAssignmentAt = data.nextAssignment?.startAt)
 
         Spacer(Modifier.height(MaterialTheme.spacing.lg))
 

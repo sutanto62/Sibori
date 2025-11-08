@@ -6,6 +6,6 @@
 [x] Apply statusBarsPadding at root; use spacing tokens
 [x] Split HomeScreen into HomeScreen, HomeSections, HomeMappers files
 [x] Add PreviewParameterProvider with sample states (Loading/Error/Empty/Ready)
-☐ Add date/time formatter in core:common and use in Home
+[x] Add date/time formatter in core:common and use in Home
 ☐ Update UI tests to use testTags and stateless API
 ☐ Mark helpers internal; minimize public API surface

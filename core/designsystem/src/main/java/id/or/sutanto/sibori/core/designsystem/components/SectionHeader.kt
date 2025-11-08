@@ -35,7 +35,7 @@ fun SectionHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = MaterialTheme.spacing.lg, vertical = MaterialTheme.spacing.md)
+            .padding(vertical = MaterialTheme.spacing.md)
             .semantics { heading() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween

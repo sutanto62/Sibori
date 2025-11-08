@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import id.or.sutanto.sibori.core.common.DateTimeFormatterUtils
 
 @Composable
 internal fun LoadingState(modifier: Modifier = Modifier) {
@@ -76,15 +77,17 @@ internal fun EmptyState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
+internal fun GreetingHeader(userName: String, nextAssignmentAt: Long? = null, modifier: Modifier = Modifier) {
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = stringResource(R.string.home_greeting_title, userName),
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
+        val subtitle = nextAssignmentAt?.let { DateTimeFormatterUtils.formatDayAndTime(it) }
+            ?: stringResource(R.string.home_greeting_subtitle)
         Text(
-            text = stringResource(R.string.home_greeting_subtitle),
+            text = subtitle,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
