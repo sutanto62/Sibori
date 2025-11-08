@@ -45,8 +45,8 @@ import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
-import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
+import id.or.sutanto.sibori.feature.home.components.HelpSection
 import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.WeekEmphasis
 import id.or.sutanto.sibori.feature.home.HomeUiState
@@ -220,28 +220,6 @@ private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
  
 
 // Using designsystem AnnouncementCard
-
-@Composable
-private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        SectionHeader(title = stringResource(R.string.home_help_title))
-
-        Spacer(Modifier.height(16.dp))
-
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            val labels = listOf(
-                stringResource(R.string.action_label_cs),
-                stringResource(R.string.action_label_bs)
-            )
-            labels.forEach { label ->
-                ActionCircle(label = label, onClick = { /* TODO */ })
-            }
-        }
-
-        Spacer(Modifier.height(8.dp))
-        HorizontalDivider()
-    }
-}
 
 // Using designsystem ActionCircle
 
