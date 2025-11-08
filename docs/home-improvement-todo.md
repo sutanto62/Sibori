@@ -1,5 +1,5 @@
 ⬢ To-do Working on 10 to-dos
-☐ Refactor HomeScreen to stateless UI; move VM logic to HomeRoute
+[x] Refactor HomeScreen to stateless UI; move VM logic to HomeRoute
 ☐ Extract WeekBadge→ThisWeekItem mapper and status→indicator mapping
 ☐ Externalize Loading/Error/Empty strings to resources
 ☐ Add semantics/testTags for Loading, Error, Empty containers

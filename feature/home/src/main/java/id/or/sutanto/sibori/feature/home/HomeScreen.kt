@@ -48,7 +48,6 @@ import id.or.sutanto.sibori.core.designsystem.components.ActionCircle
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
 import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.WeekEmphasis
-import id.or.sutanto.sibori.core.model.ConfirmationStatus
 import id.or.sutanto.sibori.feature.home.HomeUiState
 
 @Composable
@@ -100,20 +99,7 @@ private fun HomeContent(
         Spacer(Modifier.height(16.dp))
 
         // Map WeekBadge to ThisWeekItem for UI
-        val weekItems = data.weekBadges.map { badge ->
-            ThisWeekItem(
-                label = badge.label,
-                emphasis = when (badge.emphasis) {
-                    WeekEmphasis.Primary -> WeekCircleEmphasis.Primary
-                    WeekEmphasis.Neutral -> WeekCircleEmphasis.Neutral
-                },
-                indicator = when (badge.confirmation) {
-                    ConfirmationStatus.Confirmed -> WeekCircleIndicator.Confirmed
-                    ConfirmationStatus.Done -> WeekCircleIndicator.Done
-                    ConfirmationStatus.None -> WeekCircleIndicator.None
-                }
-            )
-        }
+        val weekItems = data.weekBadges.toThisWeekItems()
 
         // Get first announcement or use default
         val announcement = data.announcements.firstOrNull()
@@ -223,11 +209,7 @@ private fun GreetingHeader(userName: String, modifier: Modifier = Modifier) {
     }
 }
 
-private data class ThisWeekItem(
-    val label: String,
-    val emphasis: WeekCircleEmphasis = WeekCircleEmphasis.Neutral,
-    val indicator: WeekCircleIndicator = WeekCircleIndicator.None,
-)
+// UI model extracted to HomeMappers.kt
 
 @Composable
 private fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifier) {
