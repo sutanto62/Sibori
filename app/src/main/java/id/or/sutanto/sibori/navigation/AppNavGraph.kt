@@ -6,12 +6,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import id.or.sutanto.sibori.feature.home.HomeDestination
 import id.or.sutanto.sibori.feature.home.homeScreen
-import id.or.sutanto.sibori.ui.FavoriteScreen
+import id.or.sutanto.sibori.ui.ScheduleScreen
 import id.or.sutanto.sibori.ui.ProfileScreen
 
 object AppDestinations {
     const val HOME = HomeDestination.route
-    const val FAVORITES = "favorites"
+    const val SCHEDULE = "schedule"
     const val PROFILE = "profile"
 }
 
@@ -25,7 +25,7 @@ fun AppNavGraph(
         homeScreen()
 
         // App-local placeholders for now
-        composable(AppDestinations.FAVORITES) { FavoriteScreen() }
+        composable(AppDestinations.SCHEDULE) { ScheduleScreen() }
         composable(AppDestinations.PROFILE) { ProfileScreen() }
     }
 }

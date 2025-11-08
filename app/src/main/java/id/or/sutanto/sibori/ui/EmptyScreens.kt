@@ -10,14 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun FavoriteScreen(modifier: Modifier = Modifier) {
+fun ScheduleScreen(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
             .statusBarsPadding(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Favorite screen", style = MaterialTheme.typography.bodyLarge)
+        Text(text = "Schedule screen", style = MaterialTheme.typography.bodyLarge)
     }
 }
 

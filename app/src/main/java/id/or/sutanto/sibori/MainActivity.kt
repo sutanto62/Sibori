@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -76,7 +76,7 @@ data class AppDestItem(val route: String, val label: String, val icon: ImageVect
 
 private val AppDestinationsItems = listOf(
     AppDestItem(AppDestinations.HOME, "Home", Icons.Default.Home),
-    AppDestItem(AppDestinations.FAVORITES, "Favorites", Icons.Default.Favorite),
+    AppDestItem(AppDestinations.SCHEDULE, "Schedule", Icons.Default.Schedule),
     AppDestItem(AppDestinations.PROFILE, "Profile", Icons.Default.AccountBox),
 )
 
