@@ -1,5 +1,6 @@
 package id.or.sutanto.sibori.feature.home
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +39,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
-import androidx.hilt.navigation.compose.hiltViewModel
 import id.or.sutanto.sibori.core.designsystem.components.SectionHeader
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircle
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
@@ -51,24 +50,22 @@ import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.WeekEmphasis
 import id.or.sutanto.sibori.core.model.ConfirmationStatus
 import id.or.sutanto.sibori.feature.home.HomeUiState
-import id.or.sutanto.sibori.feature.home.HomeViewModel
 
 @Composable
 fun HomeScreen(
+    state: HomeUiState,
     modifier: Modifier = Modifier,
     widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
-    viewModel: HomeViewModel = hiltViewModel(),
+    onRetry: () -> Unit = {},
 ) {
-    val uiState by viewModel.state.collectAsStateWithLifecycle()
-
-    when (val state = uiState) {
+    when (val current = state) {
         is HomeUiState.Loading -> {
             LoadingState(modifier = modifier.statusBarsPadding())
         }
         is HomeUiState.Error -> {
             ErrorState(
-                message = state.message,
-                onRetry = { viewModel.refresh() },
+                message = current.message,
+                onRetry = onRetry,
                 modifier = modifier.statusBarsPadding()
             )
         }
@@ -77,7 +74,7 @@ fun HomeScreen(
         }
         is HomeUiState.Ready -> {
             HomeContent(
-                data = state.data,
+                data = current.data,
                 widthSizeClass = widthSizeClass,
                 modifier = modifier.statusBarsPadding()
             )
@@ -292,7 +289,7 @@ private fun HelpSection(onAddClick: () -> Unit, actions: List<String>, modifier:
 @Composable
 private fun HomeScreenPreviewEn() {
     SiboriTheme {
-        HomeScreen()
+        HomeScreen(state = HomeUiState.Loading)
     }
 }
 
@@ -302,7 +299,7 @@ private fun HomeScreenPreviewEn() {
 @Composable
 private fun HomeScreenPreviewId() {
     SiboriTheme {
-        HomeScreen()
+        HomeScreen(state = HomeUiState.Empty)
     }
 }
 
@@ -310,6 +307,13 @@ private fun HomeScreenPreviewId() {
 @Composable
 private fun HomeScreenMultiPreview() {
     SiboriTheme {
-        HomeScreen()
+        val demo = id.or.sutanto.sibori.core.domain.HomeData(
+            userName = "Cayadi",
+            nextAssignment = null,
+            weekBadges = emptyList(),
+            announcements = emptyList(),
+            openNeedsCount = 0
+        )
+        HomeScreen(state = HomeUiState.Ready(demo))
     }
 }
