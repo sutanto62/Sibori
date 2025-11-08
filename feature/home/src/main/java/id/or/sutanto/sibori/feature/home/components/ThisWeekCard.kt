@@ -26,7 +26,7 @@ internal fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifi
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(MaterialTheme.radii.lg),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(MaterialTheme.spacing.lg)) {
             Text(

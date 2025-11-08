@@ -16,8 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewFontScale
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
@@ -34,13 +34,13 @@ fun HomeScreen(
     onRetry: () -> Unit = {},
 ) {
     Box(modifier = modifier.statusBarsPadding()) {
-        when (val current = state) {
+        when (state) {
             is HomeUiState.Loading -> {
                 LoadingState(modifier = Modifier)
             }
             is HomeUiState.Error -> {
                 ErrorState(
-                    message = current.message,
+                    message = state.message,
                     onRetry = onRetry,
                     modifier = Modifier
                 )
@@ -50,7 +50,7 @@ fun HomeScreen(
             }
             is HomeUiState.Ready -> {
                 HomeContent(
-                    data = current.data,
+                    data = state.data,
                     widthSizeClass = widthSizeClass,
                     modifier = Modifier
                 )
@@ -122,26 +122,6 @@ private fun HomeContent(
 
 // Sections extracted to HomeSections.kt
 
-@PreviewLightDark
-@PreviewFontScale
-@Preview(showBackground = true, name = "Home - EN", locale = "en")
-@Composable
-private fun HomeScreenPreviewEn() {
-    SiboriTheme {
-        HomeScreen(state = HomeUiState.Loading)
-    }
-}
-
-@PreviewLightDark
-@PreviewFontScale
-@Preview(showBackground = true, name = "Home - ID", locale = "id")
-@Composable
-private fun HomeScreenPreviewId() {
-    SiboriTheme {
-        HomeScreen(state = HomeUiState.Empty)
-    }
-}
-
 @PreviewScreenSizes
 @Composable
 private fun HomeScreenMultiPreview() {
@@ -154,5 +134,16 @@ private fun HomeScreenMultiPreview() {
             openNeedsCount = 0
         )
         HomeScreen(state = HomeUiState.Ready(demo))
+    }
+}
+
+@PreviewLightDark
+@Preview(showBackground = true, name = "Home - Param States")
+@Composable
+private fun HomeScreenStatesPreview(
+    @PreviewParameter(HomeStatePreviewParamProvider::class) state: HomeUiState
+) {
+    SiboriTheme {
+        HomeScreen(state = state)
     }
 }
