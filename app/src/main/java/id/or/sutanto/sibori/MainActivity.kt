@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -54,7 +55,7 @@ fun SiboriRoot(widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compa
             AppDestinationsItems.forEach { item ->
                 item(
                     icon = { Icon(item.icon, contentDescription = item.label) },
-                    label = { Text(item.label) },
+                    label = { Text(item.label, textAlign = TextAlign.Center) },
                     selected = currentRoute == item.route,
                     onClick = {
                         val options = navOptions {
