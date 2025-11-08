@@ -21,22 +21,24 @@ import id.or.sutanto.sibori.core.designsystem.components.WeekCircleEmphasis
 import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import androidx.compose.material3.MaterialTheme
 import id.or.sutanto.sibori.feature.home.ThisWeekItem
+import id.or.sutanto.sibori.core.designsystem.theme.spacing
+import id.or.sutanto.sibori.core.designsystem.theme.radii
 
 @Composable
 internal fun ThisWeekCard(items: List<ThisWeekItem>, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(MaterialTheme.radii.lg),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(MaterialTheme.spacing.lg)) {
             Text(
                 text = stringResource(R.string.home_this_week),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.padding(top = 12.dp))
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Spacer(modifier = Modifier.padding(top = MaterialTheme.spacing.md))
+            LazyRow(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.md)) {
                 items(items.size) { index ->
                     val item = items[index]
                     WeekCircle(

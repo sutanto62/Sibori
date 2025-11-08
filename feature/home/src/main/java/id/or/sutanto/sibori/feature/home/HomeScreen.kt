@@ -46,6 +46,7 @@ import id.or.sutanto.sibori.core.designsystem.components.WeekCircleIndicator
 import id.or.sutanto.sibori.feature.home.components.ThisWeekCard
 import id.or.sutanto.sibori.core.designsystem.components.AnnouncementCard
 import id.or.sutanto.sibori.core.designsystem.theme.SiboriTheme
+import id.or.sutanto.sibori.core.designsystem.theme.spacing
 import id.or.sutanto.sibori.feature.home.components.HelpSection
 import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.WeekEmphasis
@@ -58,26 +59,28 @@ fun HomeScreen(
     widthSizeClass: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
     onRetry: () -> Unit = {},
 ) {
-    when (val current = state) {
-        is HomeUiState.Loading -> {
-            LoadingState(modifier = modifier.statusBarsPadding())
-        }
-        is HomeUiState.Error -> {
-            ErrorState(
-                message = current.message,
-                onRetry = onRetry,
-                modifier = modifier.statusBarsPadding()
-            )
-        }
-        is HomeUiState.Empty -> {
-            EmptyState(modifier = modifier.statusBarsPadding())
-        }
-        is HomeUiState.Ready -> {
-            HomeContent(
-                data = current.data,
-                widthSizeClass = widthSizeClass,
-                modifier = modifier.statusBarsPadding()
-            )
+    Box(modifier = modifier.statusBarsPadding()) {
+        when (val current = state) {
+            is HomeUiState.Loading -> {
+                LoadingState(modifier = Modifier)
+            }
+            is HomeUiState.Error -> {
+                ErrorState(
+                    message = current.message,
+                    onRetry = onRetry,
+                    modifier = Modifier
+                )
+            }
+            is HomeUiState.Empty -> {
+                EmptyState(modifier = Modifier)
+            }
+            is HomeUiState.Ready -> {
+                HomeContent(
+                    data = current.data,
+                    widthSizeClass = widthSizeClass,
+                    modifier = Modifier
+                )
+            }
         }
     }
 }
@@ -91,13 +94,13 @@ private fun HomeContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(MaterialTheme.spacing.lg)
     ) {
         val configuration = LocalConfiguration.current
         val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
         GreetingHeader(userName = data.userName)
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(MaterialTheme.spacing.lg))
 
         // Map WeekBadge to ThisWeekItem for UI
         val weekItems = data.weekBadges.toThisWeekItems()
@@ -106,7 +109,7 @@ private fun HomeContent(
         val announcement = data.announcements.firstOrNull()
 
         if (widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape) {
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth()) {
+            Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.lg), modifier = Modifier.fillMaxWidth()) {
                 ThisWeekCard(
                     items = weekItems,
                     modifier = Modifier.weight(1f)
@@ -123,7 +126,7 @@ private fun HomeContent(
             ThisWeekCard(items = weekItems)
         }
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(Modifier.height(MaterialTheme.spacing.lg))
 
         if (!(widthSizeClass >= WindowWidthSizeClass.Medium || isLandscape)) {
             if (announcement != null) {
@@ -134,7 +137,7 @@ private fun HomeContent(
             }
         }
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(MaterialTheme.spacing.xl))
 
         HelpSection(
             onAddClick = { /* TODO: hook action */ },
