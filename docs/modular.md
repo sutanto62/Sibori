@@ -63,7 +63,7 @@ plugins {
 android {
   namespace = "id.or.sutanto.sibori.core.designsystem" // adjust per-module
   compileSdk = 36
-  defaultConfig { minSdk = 24 }
+  defaultConfig { minSdk = 26 }
   buildFeatures { compose = true }
   composeOptions { /* handled by BOM */ }
 }
