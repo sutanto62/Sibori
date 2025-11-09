@@ -20,7 +20,7 @@ data class Profile(
 
 /** Type of ministry/service. Expand as we add more. */
 enum class MinistryType {
-    MASS,
+    PRIEST_ASSISTANT,
     MASS_USHER,
     CHOIR,
 }

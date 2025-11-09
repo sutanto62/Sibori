@@ -33,7 +33,7 @@ class HomeRepositoryTest {
         
         assignment?.let {
             assertEquals("assign_1", it.id)
-            assertEquals(MinistryType.MASS, it.ministryType)
+            assertEquals(MinistryType.PRIEST_ASSISTANT, it.ministryType)
             assertEquals("St. Peter Parish", it.location)
             assertEquals(false, it.isConfirmedByUser)
             assertEquals(ReplacementStatus.NONE, it.replacementStatus)

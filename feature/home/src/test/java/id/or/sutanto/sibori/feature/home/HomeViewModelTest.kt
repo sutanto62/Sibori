@@ -72,7 +72,7 @@ class HomeViewModelTest {
         nextAssignment = MinistryAssignment(
             id = "a1",
             startAt = 0L,
-            ministryType = MinistryType.MASS
+            ministryType = MinistryType.PRIEST_ASSISTANT
         ),
         weekBadges = emptyList(),
         announcements = listOf(Announcement("id", "Title", "Sub")),
@@ -86,7 +86,7 @@ class HomeViewModelTest {
         override suspend fun getNextAssignment(): id.or.sutanto.sibori.core.model.MinistryAssignment? =
             when (mode) {
                 Mode.DATA -> id.or.sutanto.sibori.core.model.MinistryAssignment(
-                    id = "a1", startAt = 0L, ministryType = id.or.sutanto.sibori.core.model.MinistryType.MASS
+                    id = "a1", startAt = 0L, ministryType = id.or.sutanto.sibori.core.model.MinistryType.PRIEST_ASSISTANT
                 )
                 Mode.EMPTY, Mode.ERROR -> null
             }

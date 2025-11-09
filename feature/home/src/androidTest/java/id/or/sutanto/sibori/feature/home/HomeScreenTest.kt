@@ -26,7 +26,7 @@ class HomeScreenTest {
     fun renders_ready_state_content() {
         val data = HomeData(
             userName = "Test",
-            nextAssignment = MinistryAssignment(id = "a1", startAt = 0L, ministryType = MinistryType.MASS),
+            nextAssignment = MinistryAssignment(id = "a1", startAt = 0L, ministryType = MinistryType.PRIEST_ASSISTANT),
             weekBadges = emptyList(),
             announcements = listOf(Announcement("ann_1", "Reminder: Rehearsal on Friday", "Choir rehearsal at 7 PM in the hall")),
             openNeedsCount = 0

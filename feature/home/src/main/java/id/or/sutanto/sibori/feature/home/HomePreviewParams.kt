@@ -20,7 +20,7 @@ internal class HomeStatePreviewParamProvider : PreviewParameterProvider<HomeUiSt
                 nextAssignment = MinistryAssignment(
                     id = "assign_prev",
                     startAt = System.currentTimeMillis() + 3 * 60 * 60 * 1000,
-                    ministryType = MinistryType.MASS
+                    ministryType = MinistryType.PRIEST_ASSISTANT
                 ),
                 weekBadges = listOf(
                     WeekBadge(label = "M1", emphasis = WeekEmphasis.Primary, confirmation = ConfirmationStatus.Confirmed),

@@ -26,7 +26,7 @@ class FakeHomeRepository : HomeRepository {
         MinistryAssignment(
             id = "assign_1",
             startAt = sampleEpochMillis(dayOffset = 2, hour24 = 9),
-            ministryType = id.or.sutanto.sibori.core.model.MinistryType.MASS,
+            ministryType = id.or.sutanto.sibori.core.model.MinistryType.PRIEST_ASSISTANT,
             location = "St. Peter Parish",
             isConfirmedByUser = false,
             replacementStatus = id.or.sutanto.sibori.core.model.ReplacementStatus.NONE,
