@@ -5,6 +5,7 @@ import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.Announcement
 import id.or.sutanto.sibori.core.model.MinistryAssignment
 import id.or.sutanto.sibori.core.model.MinistryType
+import id.or.sutanto.sibori.core.model.ScheduleEventStatus
 import id.or.sutanto.sibori.core.model.WeekBadge
 import id.or.sutanto.sibori.core.model.WeekEmphasis
 import id.or.sutanto.sibori.core.model.ConfirmationStatus
@@ -17,11 +18,13 @@ internal class HomeStatePreviewParamProvider : PreviewParameterProvider<HomeUiSt
         HomeUiState.Ready(
             HomeData(
                 userName = "Cayadi",
-                nextAssignment = MinistryAssignment(
-                    id = "assign_prev",
-                    startAt = System.currentTimeMillis() + 3 * 60 * 60 * 1000,
-                    ministryType = MinistryType.PRIEST_ASSISTANT
-                ),
+                    nextAssignment = MinistryAssignment(
+                        id = "assign_prev",
+                        scheduleEventId = 1L,
+                        scheduledAt = System.currentTimeMillis() + 3 * 60 * 60 * 1000,
+                        ministryType = MinistryType.PRIEST_ASSISTANT,
+                        status = ScheduleEventStatus.UNCONFIRMED,
+                    ),
                 weekBadges = listOf(
                     WeekBadge(label = "M1", emphasis = WeekEmphasis.Primary, confirmation = ConfirmationStatus.Confirmed),
                     WeekBadge(label = "M2", confirmation = ConfirmationStatus.Confirmed),

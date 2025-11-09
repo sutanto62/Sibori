@@ -2,6 +2,7 @@ package id.or.sutanto.sibori.core.data
 
 import id.or.sutanto.sibori.core.model.Announcement
 import id.or.sutanto.sibori.core.model.MinistryAssignment
+import id.or.sutanto.sibori.core.model.ScheduleEventStatus
 import id.or.sutanto.sibori.core.model.WeekBadge
 
 /**
@@ -25,10 +26,11 @@ class FakeHomeRepository : HomeRepository {
     override suspend fun getNextAssignment(): MinistryAssignment? =
         MinistryAssignment(
             id = "assign_1",
-            startAt = sampleEpochMillis(dayOffset = 2, hour24 = 9),
+            scheduleEventId = 1L,
+            scheduledAt = sampleEpochMillis(dayOffset = 2, hour24 = 9),
             ministryType = id.or.sutanto.sibori.core.model.MinistryType.PRIEST_ASSISTANT,
+            status = ScheduleEventStatus.UNCONFIRMED,
             location = "St. Peter Parish",
-            isConfirmedByUser = false,
             replacementStatus = id.or.sutanto.sibori.core.model.ReplacementStatus.NONE,
         )
 

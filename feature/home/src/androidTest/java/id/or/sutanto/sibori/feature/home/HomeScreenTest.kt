@@ -12,6 +12,7 @@ import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.Announcement
 import id.or.sutanto.sibori.core.model.MinistryAssignment
 import id.or.sutanto.sibori.core.model.MinistryType
+import id.or.sutanto.sibori.core.model.ScheduleEventStatus
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +27,13 @@ class HomeScreenTest {
     fun renders_ready_state_content() {
         val data = HomeData(
             userName = "Test",
-            nextAssignment = MinistryAssignment(id = "a1", startAt = 0L, ministryType = MinistryType.PRIEST_ASSISTANT),
+            nextAssignment = MinistryAssignment(
+                id = "a1",
+                scheduleEventId = 1L,
+                scheduledAt = 0L,
+                ministryType = MinistryType.PRIEST_ASSISTANT,
+                status = ScheduleEventStatus.UNCONFIRMED,
+            ),
             weekBadges = emptyList(),
             announcements = listOf(Announcement("ann_1", "Reminder: Rehearsal on Friday", "Choir rehearsal at 7 PM in the hall")),
             openNeedsCount = 0

@@ -7,6 +7,7 @@ import id.or.sutanto.sibori.core.domain.HomeData
 import id.or.sutanto.sibori.core.model.Announcement
 import id.or.sutanto.sibori.core.model.MinistryAssignment
 import id.or.sutanto.sibori.core.model.MinistryType
+import id.or.sutanto.sibori.core.model.ScheduleEventStatus
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -71,8 +72,10 @@ class HomeViewModelTest {
         userName = "Test",
         nextAssignment = MinistryAssignment(
             id = "a1",
-            startAt = 0L,
-            ministryType = MinistryType.PRIEST_ASSISTANT
+            scheduleEventId = 1L,
+            scheduledAt = 0L,
+            ministryType = MinistryType.PRIEST_ASSISTANT,
+            status = ScheduleEventStatus.UNCONFIRMED,
         ),
         weekBadges = emptyList(),
         announcements = listOf(Announcement("id", "Title", "Sub")),
@@ -86,7 +89,11 @@ class HomeViewModelTest {
         override suspend fun getNextAssignment(): id.or.sutanto.sibori.core.model.MinistryAssignment? =
             when (mode) {
                 Mode.DATA -> id.or.sutanto.sibori.core.model.MinistryAssignment(
-                    id = "a1", startAt = 0L, ministryType = id.or.sutanto.sibori.core.model.MinistryType.PRIEST_ASSISTANT
+                    id = "a1",
+                    scheduleEventId = 1L,
+                    scheduledAt = 0L,
+                    ministryType = id.or.sutanto.sibori.core.model.MinistryType.PRIEST_ASSISTANT,
+                    status = ScheduleEventStatus.UNCONFIRMED,
                 )
                 Mode.EMPTY, Mode.ERROR -> null
             }

@@ -34,13 +34,30 @@ enum class ReplacementStatus {
     ACCEPTED,      // Replacement accepted by another assistant
 }
 
+/** Canonical status mirrored from Supabase schedule_events.status. */
+enum class ScheduleEventStatus {
+    CONFIRMED,
+    PENDING_REPLACEMENT,
+    UNCONFIRMED,
+}
+
+/** Room/Supabase aligned representation of a schedule event for an assistant. */
+data class ScheduleEvent(
+    val id: Long,
+    val ministryId: Long,
+    val assignedUserId: String,
+    val scheduledAt: Long,
+    val status: ScheduleEventStatus,
+)
+
 /** A single ministry assignment (personal or parish schedule item). */
 data class MinistryAssignment(
     val id: String,
-    val startAt: Long,
+    val scheduleEventId: Long,
+    val scheduledAt: Long,
     val ministryType: MinistryType,
+    val status: ScheduleEventStatus = ScheduleEventStatus.UNCONFIRMED,
     val location: String? = null,
-    val isConfirmedByUser: Boolean = false,
     val replacementStatus: ReplacementStatus = ReplacementStatus.NONE,
 )
 

@@ -1,7 +1,7 @@
 ## Home Schedule (This Week) Offline-First TODO
 
 - **Scope & Contracts**
-  - [ ] Confirm `ScheduleEvent` shared model shape in `core:model` aligns with Supabase schema and Room entity needs.
+  - [x] Confirm `ScheduleEvent` shared model shape in `core:model` aligns with Supabase schema and Room entity needs (id/ministryId/assignedUserId/scheduledAt/status mirrors Supabase, fuels Room entity).
   - [ ] Document `ThisWeek` filter rules (time zone, week start) inside `core:common` utilities.
   - [ ] Define status enum + mapper to reconcile Supabase values, Room entity, and UI labels.
 

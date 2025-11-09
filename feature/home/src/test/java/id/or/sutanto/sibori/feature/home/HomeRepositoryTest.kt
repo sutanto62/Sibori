@@ -9,6 +9,7 @@ import org.junit.Test
 import id.or.sutanto.sibori.core.data.FakeHomeRepository
 import id.or.sutanto.sibori.core.model.MinistryType
 import id.or.sutanto.sibori.core.model.ReplacementStatus
+import id.or.sutanto.sibori.core.model.ScheduleEventStatus
 import id.or.sutanto.sibori.core.model.WeekEmphasis
 import id.or.sutanto.sibori.core.model.ConfirmationStatus
 
@@ -33,11 +34,12 @@ class HomeRepositoryTest {
         
         assignment?.let {
             assertEquals("assign_1", it.id)
+            assertEquals(1L, it.scheduleEventId)
             assertEquals(MinistryType.PRIEST_ASSISTANT, it.ministryType)
             assertEquals("St. Peter Parish", it.location)
-            assertEquals(false, it.isConfirmedByUser)
+            assertEquals(ScheduleEventStatus.UNCONFIRMED, it.status)
             assertEquals(ReplacementStatus.NONE, it.replacementStatus)
-            assertTrue(it.startAt > System.currentTimeMillis())
+            assertTrue(it.scheduledAt > System.currentTimeMillis())
         }
     }
 
